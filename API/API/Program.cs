@@ -7,7 +7,7 @@ builder.Services.AddDbContext<AppDataContext>();
 
 var app = builder.Build();
 
-app.MapGet("/", () => "COLOQUE O SEU NOME");
+app.MapGet("/", () => "Luan Suldovski");
 
 //ENDPOINTS DE TAREFA
 //GET: http://localhost:5273/api/chamado/listar
@@ -31,13 +31,27 @@ app.MapPost("/api/chamado/cadastrar", ([FromServices] AppDataContext ctx, [FromB
 //PUT: http://localhost:5273/chamado/alterar/{id}
 app.MapPut("/api/chamado/alterar/{id}", ([FromServices] AppDataContext ctx, [FromRoute] string id) =>
 {
-    //Implementar a alteração do status do chamado
+  Chamado? chamado = ctx.Chamados.Find(id);
+if (chamado is null)
+{
+return Results.NotFound("Chamado não encontrado!");
+}
+
 });
 
 //GET: http://localhost:5273/chamado/naoconcluidas
-app.MapGet("/api/chamado/naoresolvidos", ([FromServices] AppDataContext ctx) =>
+app.MapGet("/api/chamado/abertos", ([FromServices] AppDataContext ctx) =>
 {
-    //Implementar a listagem dos chamados não resolvidos
+    if (chamado.Status == "Aberto")
+    {
+        chamado.Status = "Em atendimento";
+    }
+    else if (chamado.Status == "Em atendimento")
+    {
+        chamado.Status = "Resolvido";
+    }
+
+        
 });
 
 //GET: http://localhost:5273/chamado/concluidas
@@ -46,4 +60,7 @@ app.MapGet("/api/chamado/resolvidos", ([FromServices] AppDataContext ctx) =>
     //Implementar a listagem dos chamados resolvidos
 });
 
+
 app.Run();
+
+
