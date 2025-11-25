@@ -9,10 +9,10 @@ PATCH http://localhost:5000/api/chamado/alterar
 
 
 ###listar chamado em aberto
-GET: http://localhost:5000/api/chamado/abertos
+GET http://localhost:5000/api/chamado/abertos
 
 ###listar chamado resolvidos
-GET: http: //localhost:5000/api/chamado/resolvidos
+GET http: //localhost:5000/api/chamado/resolvidos
 
 
 

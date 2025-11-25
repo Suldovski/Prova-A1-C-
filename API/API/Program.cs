@@ -37,27 +37,30 @@ app.MapPost("/api/chamado/cadastrar", ([FromServices] AppDataContext ctx, [FromB
 });
 
 //PUT: http://localhost:5273/chamado/alterar/{id}
-app.MapPut("/api/chamado/alterar/{id}", ([FromServices] AppDataContext ctx, [FromRoute] string id) =>
+app.MapPut("/api/chamado/alterar/{ChamadoId}", ([FromServices] AppDataContext ctx, [FromRoute] string ChamadoId) =>
 {
-  Chamado? chamado = ctx.Chamados.Find(id);
+  Chamado? chamado = ctx.Chamados.Find(ChamadoId);
 if (chamado is null)
 {
 return Results.NotFound("Chamado não encontrado!");
 }
 
 });
-if (chamado.Status = "Aberto")
+
+// GET: http://localhost:5000/api/chamado/abertos
+app.MapGet("/api/chamado/abertos", ([FromServices] AppDataContext ctx) =>
 {
-    chamado.Status = "Em andamento";
-}
-else if (chamado.Status == "Em andamento")
+   
+    var chamadosAbertos = ctx.Chamados
+        .Where(c => c.Status != "Concluída")
+        .ToList();
+
+    return Results.Ok(chamadosAbertos);
+});
+
+
+// GET: http://localhost:5000/api/chamado/resolvidos
+app.MapGet("/api/chamado/resolvidos", ([FromServices] AppDataContext ctx) =>
 {
-    chamado.Status = "Concluída";
-}
-
-ctx.Chamados.Update(chamado);
-ctx.SaveChanges();
-return.Results.Ok(ctx.Chamados.ToList());
-app.Run();
-
-
+    var chamadosConcluidos = ctx.Chamados;
+});

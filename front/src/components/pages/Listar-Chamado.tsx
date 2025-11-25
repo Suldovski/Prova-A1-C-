@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Chamado } from '../models/Chamados';
+import { Chamado } from "../models/chamado";
 
 
 function ListarChamados(){
@@ -17,19 +17,22 @@ setChamados(chamados);
 
 function alterar(id: string){
 console.log(‘Id: ${id}’);
-.put(‘http://localhost:5000/chamados/alterar/${id}’)
+fetch('http://localhost:5000/chamados/alterar/${id}')
 .then(resposta) => {
 setChamados(resposta.data);
 
-});
+}};
 
-}
+{
 
     return(
         <div>
             <h1>Listar Chamados</h1>
         </div>    
             );
+        
+        }
+        {       
 return(
 <div>
 <h1>Listar Chamados</h1>
@@ -57,3 +60,4 @@ return(
 }
     
 export default ListarChamados;
+

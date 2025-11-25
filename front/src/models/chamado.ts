@@ -1,4 +1,4 @@
-export Interface Chamado{
+export interface Chamado{
 
     ChamadoId: String;
     Descricao: String;

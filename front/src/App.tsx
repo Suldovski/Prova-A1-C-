@@ -1,6 +1,9 @@
 import React from 'react';
-import ListarChamado from "./components/pages/Listar-Chamado";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import ListarChamados from "./components/pages/Listar-Chamado";
+import ListarChamadosAbertos from './components/pages/Listar-abertos';
+import ListarChamadosResolvidos from './components/pages/Listar-resolvidos';
+import CadastrarChamado from './components/Cadastrar-chamado';
 
 function App() {
 return (

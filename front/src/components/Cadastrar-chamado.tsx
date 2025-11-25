@@ -1,5 +1,6 @@
 import Navigate, { usestate,useEffect, useNavigate } from “react-router-dom”;
-import { Categoria } from '../models/categoria';
+import { Chamado } from '../models/Chamado';
+
 UseEffect(() => {
     carregarChamados();
 }, []);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Chamado } from "'../models/chamado';"
+import { Chamado } from '../models/Chamado';
 
 function ListarChamadosResolvidos() {
 const [chamados, setChamados] = useState<Chamado[]>([]);
