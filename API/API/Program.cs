@@ -5,6 +5,14 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDataContext>();
 
+builder.Services.AddCors(options =>
+options.AddPolicy("Acesso Total",
+configs => configs
+.AllowAnyOrigin()
+.AllowAnyHeader()
+.AllowAnyMethod())
+);
+
 var app = builder.Build();
 
 app.MapGet("/", () => "Luan Suldovski");
@@ -38,29 +46,18 @@ return Results.NotFound("Chamado não encontrado!");
 }
 
 });
-
-//GET: http://localhost:5273/chamado/naoconcluidas
-app.MapGet("/api/chamado/abertos", ([FromServices] AppDataContext ctx) =>
+if (chamado.Status = "Aberto")
 {
-    if (chamado.Status == "Aberto")
-    {
-        chamado.Status = "Em atendimento";
-    }
-    else if (chamado.Status == "Em atendimento")
-    {
-        chamado.Status = "Resolvido";
-    }
-
-        
-});
-
-//GET: http://localhost:5273/chamado/concluidas
-app.MapGet("/api/chamado/resolvidos", ([FromServices] AppDataContext ctx) =>
+    chamado.Status = "Em andamento";
+}
+else if (chamado.Status == "Em andamento")
 {
-    //Implementar a listagem dos chamados resolvidos
-});
+    chamado.Status = "Concluída";
+}
 
-
+ctx.Chamados.Update(chamado);
+ctx.SaveChanges();
+return.Results.Ok(ctx.Chamados.ToList());
 app.Run();
 
 
